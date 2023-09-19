@@ -5,6 +5,7 @@ class CreateUserDto {
   @IsString()
   @MaxLength(30)
   @IsEmail()
+  @Matches(/^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/)
   email: string;
 
   @IsNotEmpty()
