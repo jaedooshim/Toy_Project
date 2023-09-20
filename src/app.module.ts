@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { ormConfig } from './_common/typeorm.config';
+import { AuthMiddleware } from './_common/middlewares/auth.middleware';
 
 @Module({
   imports: [
@@ -13,4 +14,8 @@ import { ormConfig } from './_common/typeorm.config';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('user');
+  }
+}
